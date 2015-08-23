@@ -1,16 +1,12 @@
-require 'rubygems'
-require 'bundler'
-Bundler.require()
-require 'salesforce_bulk_api/version'
 require 'net/https'
 require 'xmlsimple'
 require 'csv'
 require 'salesforce_bulk_api/concerns/throttling'
 require 'salesforce_bulk_api/job'
 require 'salesforce_bulk_api/connection'
+require 'salesforce_bulk_api/version'
 
 module SalesforceBulkApi
-
   class Api
     attr_reader :connection
 
@@ -53,8 +49,7 @@ module SalesforceBulkApi
       }
     end
 
-
-    ##
+    #
     # Allows you to attach a listener that accepts the created job (which has a useful #job_id field).  This is useful
     # for recording a job ID persistently before you begin batch work (i.e. start modifying the salesforce database),
     # so if the load process you are writing needs to recover, it can be aware of previous jobs it started and wait
@@ -81,6 +76,7 @@ module SalesforceBulkApi
     end
 
     private
+
     def get_counters
       @counters ||= Hash.new(0)
     end
@@ -88,6 +84,5 @@ module SalesforceBulkApi
     def count(name)
       get_counters[name] += 1
     end
-
   end
 end

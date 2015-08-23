@@ -2,32 +2,32 @@
 [![Gem Version](https://badge.fury.io/rb/salesforce_bulk_api.png)](http://badge.fury.io/rb/salesforce_bulk_api)
 ## Overview
 
-Salesforce bulk API is a simple ruby gem for connecting to and using the Salesforce Bulk API. It is actually a re-written code from [salesforce_bulk](https://github.com/jorgevaldivia/salesforce_bulk).Written to suit many more other features as well.
+Salesforce Bulk API is a simple ruby client for Salesforce Bulk API. It is actually a re-written code from [salesforce_bulk](https://github.com/jorgevaldivia/salesforce_bulk). It is developed to add missing features
 
-## How to use
+## Usage
 
 Using this gem is simple and straight forward.
 
 To initialize:
 
-   `sudo gem install salesforce_bulk_api`
+   `gem install salesforce_bulk_api`
 
 or add
 
    `gem salesforce_bulk_api`
    
-in your Gemfile
+in your Gemfile.
 
-There are two ways to authenticate with SalesForce to use the Bulk API: databasedotcom & restforce.
-Please check out the entire documentation of the gem you decide to use to learn the various ways of authentication.
+There are two ways to authenticate with Salesforce to use the Bulk API: 
+* Databasedotcom 
+* Restforce
 
-[Databasedotcom](https://github.com/heroku/databasedotcom)
-[Restforce](https://github.com/ejholmes/restforce)
-
+Please check out the entire documentation of the gem to explore different ways of authentication.
+* [Databasedotcom](https://github.com/heroku/databasedotcom)
+* [Restforce](https://github.com/ejholmes/restforce)
 
 You can use username password combo, OmniAuth, Oauth2
 You can use as many records possible in the Array. Governor limits are taken care of inside the gem.
-
 
 	require 'salesforce_bulk_api'
 	client = Databasedotcom::Client.new :client_id =>  SFDC_APP_CONFIG["client_id"], :client_secret => SFDC_APP_CONFIG["client_secret"] #client_id and client_secret respectively
@@ -62,16 +62,18 @@ OR
 	puts "result is: #{result.inspect}"
 
     # Update
-	updated_account = Hash["name" => "Test Account -- Updated", id => "a00A0001009zA2m"] # Nearly identical to an insert, but we need to pass the salesforce id.
+    # Nearly identical to an insert, but we need to pass the salesforce id.
+	updated_account = Hash["name" => "Test Account -- Updated", id => "a00A0001009zA2m"] 
 	records_to_update = Array.new
 	records_to_update.push(updated_account)
 	salesforce.update("Account", records_to_update)
 
     # Upsert
-	upserted_account = Hash["name" => "Test Account -- Upserted", "External_Field_Name" => "123456"] # Fields to be updated. External field must be included
+    # Fields to be updated. External field must be included
+	upserted_account = Hash["name" => "Test Account -- Upserted", "External_Field_Name" => "123456"] 
 	records_to_upsert = Array.new
 	records_to_upsert.push(upserted_account)
-	salesforce.upsert("Account", records_to_upsert, "External_Field_Name") # Note that upsert accepts an extra parameter for the external field name
+	salesforce.upsert("Account", records_to_upsert, "External_Field_Name") 
 
     # Delete
 	deleted_account = Hash["id" => "a00A0001009zA2m"] # We only specify the id of the records to delete
